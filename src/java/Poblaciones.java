@@ -36,22 +36,7 @@ public class Poblaciones extends HttpServlet {
         rutaFicheros = config.getServletContext().getRealPath("").concat(File.separator).concat("ficheros");
     }
     
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-        }
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -65,11 +50,10 @@ public class Poblaciones extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
         ArrayList<String> pueblos = Utilidades.getPoblaciones(rutaFicheros.concat(File.separator).concat("Albacete.txt"));
-        request.setAttribute("provincias", provincias);
-        request.setAttribute("provincia", "Albacete");
-        request.setAttribute("pueblos", pueblos);
+        request.setAttribute("provincias",provincias);
+        request.setAttribute("provincia","Albacete");
+        request.setAttribute("pueblos",pueblos);
         request.getRequestDispatcher("pueblos.jsp").forward(request, response);
     }
 
@@ -84,7 +68,15 @@ public class Poblaciones extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String provincia = request.getParameter("provincias");
+        String archivoprovincia = provincia.replace(" ", "");
+        
+        ArrayList<String> pueblos = Utilidades.getPoblaciones(rutaFicheros.concat(File.separator).concat( archivoprovincia.concat(".txt")));
+        
+        request.setAttribute("provincias",provincias);
+        request.setAttribute("provincia",provincia);
+        request.setAttribute("pueblos",pueblos);
+        request.getRequestDispatcher("pueblos.jsp").forward(request, response);
     }
 
     /**
