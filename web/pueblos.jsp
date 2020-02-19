@@ -22,6 +22,13 @@
         <h1>Pueblos de Castilla La Mancha</h1>
         <h2>Provincia activa: <%= provincia_activa%></h2>
 
+        <% for (int p = 0; p < provincias.size(); p++) { %>
+            <a href="Poblaciones?provincias=<%= provincias.get(p) %>">
+                <%= provincias.get(p) %>
+            </a>
+        <% } %>
+        <br>
+        
         <form action="Poblaciones" method="post">
             Provincia: <select name="provincias" >
                         <% for (int p = 0; p < provincias.size(); p++) { %>
